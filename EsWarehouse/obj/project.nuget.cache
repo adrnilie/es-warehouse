@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "DxqksMRUveRq7EuumfvSa7taWFzblPou6inLn8jkfrDm8/zfjjOcpVkVeMd3Z2Lnzvf6qx2qM/CYvXCVNKNmYg==",
+  "success": true,
+  "projectFilePath": "D:\\Work\\EsWarehouse\\EsWarehouse\\EsWarehouse.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Adrian I\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.0\\microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",
+    "C:\\Users\\Adrian I\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Adrian I\\.nuget\\packages\\newtonsoft.json\\12.0.1\\newtonsoft.json.12.0.1.nupkg.sha512",
+    "C:\\Users\\Adrian I\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\Adrian I\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

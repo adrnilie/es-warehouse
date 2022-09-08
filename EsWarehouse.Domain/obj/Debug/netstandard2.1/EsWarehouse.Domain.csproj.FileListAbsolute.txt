@@ -1,0 +1,13 @@
+D:\Work\EsWarehouse\EsWarehouse.Domain\bin\Debug\netstandard2.1\EsWarehouse.Domain.deps.json
+D:\Work\EsWarehouse\EsWarehouse.Domain\bin\Debug\netstandard2.1\EsWarehouse.Domain.dll
+D:\Work\EsWarehouse\EsWarehouse.Domain\bin\Debug\netstandard2.1\EsWarehouse.Domain.pdb
+D:\Work\EsWarehouse\EsWarehouse.Domain\bin\Debug\netstandard2.1\EsWarehouse.Application.Contracts.dll
+D:\Work\EsWarehouse\EsWarehouse.Domain\bin\Debug\netstandard2.1\EsWarehouse.Application.Contracts.pdb
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.csproj.AssemblyReference.cache
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.AssemblyInfoInputs.cache
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.AssemblyInfo.cs
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.csproj.CoreCompileInputs.cache
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.csproj.CopyComplete
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.dll
+D:\Work\EsWarehouse\EsWarehouse.Domain\obj\Debug\netstandard2.1\EsWarehouse.Domain.pdb

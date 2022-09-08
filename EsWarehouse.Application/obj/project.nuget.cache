@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/GKccTtEQmr2en6pmoP4NgT+Ix/I5OdjKw7+YmhfPLHFl9AbSjlJV7PEzXE1lk2y7fHM8+zXpWw3Bl16aY0pNg==",
+  "success": true,
+  "projectFilePath": "D:\\Work\\EsWarehouse\\EsWarehouse.Application\\EsWarehouse.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Adrian I\\.nuget\\packages\\newtonsoft.json\\12.0.1\\newtonsoft.json.12.0.1.nupkg.sha512",
+    "C:\\Users\\Adrian I\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
