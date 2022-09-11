@@ -1,5 +1,5 @@
 ﻿using EsWarehouse.Application.Contracts.Product.Commands;
-using EsWarehouse.Application.Registry;
+using EsWarehouse.Infrastructure.Projections;
 using EsWarehouse.Infrastructure.Repositories;
 using Newtonsoft.Json;
 
@@ -10,7 +10,10 @@ namespace EsWarehouse
         static void Main(string[] args)
         {
             var warehouseEventsRepository = new WarehouseEventsRepository();
-            var warehouseRegistry = new WarehouseRegistry();
+            var productsRepository = new ProductsRepository();
+            var productProjection = new ProductProjection(productsRepository);
+
+            warehouseEventsRepository.Subscribe(productProjection.ReceiveEvent);
 
             var key = string.Empty;
             while (key != "X")
@@ -18,17 +21,17 @@ namespace EsWarehouse
                 Console.WriteLine("C: Create Product");
                 Console.WriteLine("A: Adjust Quantity");
                 Console.WriteLine("P: Print Events");
+                Console.WriteLine("Q: Project Product");
 
                 Console.Write("> ");
                 key = Console.ReadLine()?.ToUpperInvariant();
                 Console.WriteLine();
 
                 var sku = GetSkuFromConsole();
-                var warehouseProductEvents = warehouseEventsRepository.GetAllEvents(sku);
-                var warehouseProduct = warehouseRegistry.GetWarehouseProduct(sku, warehouseProductEvents);
+                var warehouseProduct = warehouseEventsRepository.GetWarehouseProduct(sku);
 
-                string quantityInput;
-                var quantity = 0;
+                string? quantityInput;
+                int quantity;
                 switch (key)
                 {
                     case "C":
@@ -68,7 +71,12 @@ namespace EsWarehouse
                         warehouseEventsRepository.Persist(warehouseProduct.Commit());
                         break;
                     case "P":
-                        Console.WriteLine(JsonConvert.SerializeObject(warehouseProductEvents));
+                        var events = warehouseEventsRepository.GetAllEvents(sku);
+                        Console.WriteLine(JsonConvert.SerializeObject(events));
+                        break;
+                    case "Q":
+                        var product = productProjection.GetProduct(sku);
+                        Console.WriteLine(JsonConvert.SerializeObject(product));
                         break;
                     default:
                         break;
