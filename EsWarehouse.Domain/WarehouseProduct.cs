@@ -15,7 +15,8 @@ namespace EsWarehouse.Domain
 
     public class WarehouseProduct : IAggregateRoot,
         IApply<ProductCreated>,
-        IApply<QuantityAdjusted>
+        IApply<QuantityAdjusted>,
+        IApply<ProductShipped>
     {
         public int Sku { get; }
 
@@ -34,7 +35,9 @@ namespace EsWarehouse.Domain
                 return;
             }
 
-            var orderedEvents = events.OrderByDescending(x => x.Version);
+            var orderedEvents = events
+                .OrderByDescending(x => x.Version);
+
             _currentState.CurrentVersion = orderedEvents.First().Version;
 
             foreach (var @event in events)
@@ -61,6 +64,11 @@ namespace EsWarehouse.Domain
             Emit(Adapt(adjustQuantityCommand));
         }
 
+        public void ShipProduct(ShipProductCommand shipProductCommand)
+        {
+            Emit(Adapt(shipProductCommand));
+        }
+
         public void Apply(IEvent evnt)
         {
             switch (evnt)
@@ -70,6 +78,9 @@ namespace EsWarehouse.Domain
                     break;
                 case QuantityAdjusted quantityAdjusted:
                     Apply(quantityAdjusted);
+                    break;
+                case ProductShipped productShipped:
+                    Apply(productShipped);
                     break;
                 default:
                     throw new InvalidOperationException("Unsupported event");
@@ -83,6 +94,11 @@ namespace EsWarehouse.Domain
         public void Apply(QuantityAdjusted evnt)
         {
             _currentState.Quantity += evnt.Quantity;
+        }
+        
+        public void Apply(ProductShipped evnt)
+        {
+            _currentState.Quantity -= evnt.Quantity;
         }
 
         public IEnumerable<IEvent> Commit()
@@ -100,6 +116,13 @@ namespace EsWarehouse.Domain
 
         private QuantityAdjusted Adapt(AdjustQuantityCommand command)
             => new QuantityAdjusted
+            {
+                Sku = Sku,
+                Quantity = command.Quantity
+            };
+
+        private ProductShipped Adapt(ShipProductCommand command)
+            => new ProductShipped
             {
                 Sku = Sku,
                 Quantity = command.Quantity

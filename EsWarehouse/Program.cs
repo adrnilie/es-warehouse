@@ -18,8 +18,10 @@ namespace EsWarehouse
             var key = string.Empty;
             while (key != "X")
             {
+                Console.WriteLine();
                 Console.WriteLine("C: Create Product");
                 Console.WriteLine("A: Adjust Quantity");
+                Console.WriteLine("S: Ship Product");
                 Console.WriteLine("P: Print Events");
                 Console.WriteLine("Q: Project Product");
 
@@ -70,13 +72,32 @@ namespace EsWarehouse
 
                         warehouseEventsRepository.Persist(warehouseProduct.Commit());
                         break;
+                    case "S":
+                        Console.Write("Quantity: ");
+                        quantityInput = Console.ReadLine();
+
+                        if (!int.TryParse(quantityInput, out quantity))
+                        {
+                            return;
+                        }
+
+                        warehouseProduct.ShipProduct(new ShipProductCommand
+                        {
+                            Quantity = quantity
+                        });
+
+                        warehouseEventsRepository.Persist(warehouseProduct.Commit());
+                        break;
                     case "P":
                         var events = warehouseEventsRepository.GetAllEvents(sku);
-                        Console.WriteLine(JsonConvert.SerializeObject(events));
+                        foreach (var evnt in events)
+                        {
+                            Console.WriteLine(JsonConvert.SerializeObject(evnt));
+                        }
                         break;
                     case "Q":
                         var product = productProjection.GetProduct(sku);
-                        Console.WriteLine(JsonConvert.SerializeObject(product));
+                        Console.WriteLine(JsonConvert.SerializeObject(product, Formatting.Indented));
                         break;
                     default:
                         break;

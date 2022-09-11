@@ -7,7 +7,8 @@ namespace EsWarehouse.Infrastructure.Projections
 {
     public class ProductProjection : IProjection,
         IApply<ProductCreated>,
-        IApply<QuantityAdjusted>
+        IApply<QuantityAdjusted>,
+        IApply<ProductShipped>
     {
         private readonly ProductsRepository _productRepository;
 
@@ -25,6 +26,9 @@ namespace EsWarehouse.Infrastructure.Projections
                     break;
                 case QuantityAdjusted quantityAdjusted:
                     Apply(quantityAdjusted);
+                    break;
+                case ProductShipped productShipped:
+                    Apply(productShipped);
                     break;
                 default:
                     throw new InvalidOperationException("Unsupported event");
@@ -52,12 +56,22 @@ namespace EsWarehouse.Infrastructure.Projections
             var product = GetProduct(evnt.Sku);
             product.Quantity += evnt.Quantity;
             product.Name = evnt.Name;
+            product.CreatedDate = DateTime.UtcNow;
+            product.LastUpdated = DateTime.UtcNow;
         }
 
         public void Apply(QuantityAdjusted evnt)
         {
             var product = GetProduct(evnt.Sku);
             product.Quantity += evnt.Quantity;
+            product.LastUpdated = DateTime.UtcNow;
+        }
+
+        public void Apply(ProductShipped evnt)
+        {
+            var product = GetProduct(evnt.Sku);
+            product.Quantity -= evnt.Quantity;
+            product.LastUpdated = DateTime.UtcNow;
         }
     }
 }

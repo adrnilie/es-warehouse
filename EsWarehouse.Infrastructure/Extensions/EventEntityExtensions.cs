@@ -31,6 +31,11 @@ namespace EsWarehouse.Infrastructure.Extensions
                 return JsonConvert.DeserializeObject<QuantityAdjusted>(evnt.Body);
             }
 
+            if (evnt.Type == typeof(ProductShipped).FullName)
+            {
+                return JsonConvert.DeserializeObject<ProductShipped>(evnt.Body);
+            }
+
             throw new InvalidOperationException("Unsupported event");
         }
     }

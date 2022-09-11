@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EsWarehouse.Infrastructure.Repositories
@@ -8,6 +9,8 @@ namespace EsWarehouse.Infrastructure.Repositories
         public int Sku { get; set; }
         public string Name { get; set; } = default!;
         public int Quantity { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime LastUpdated { get; set; }
     }
 
     public class ProductsRepository

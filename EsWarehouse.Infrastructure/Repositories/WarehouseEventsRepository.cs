@@ -17,12 +17,14 @@ namespace EsWarehouse.Infrastructure.Repositories
         public WarehouseProduct GetWarehouseProduct(int sku)
         {
             var warehouseProduct = new WarehouseProduct(sku);
-            if (!_events.Any())
+
+            var events = _events.Where(x => x.CorrelationId == sku);
+            if (!events.Any())
             {
                 return warehouseProduct;
             }
 
-            warehouseProduct.RestoreFrom(_events.Select(ev => ev.ToEvent()));
+            warehouseProduct.RestoreFrom(events.Select(ev => ev.ToEvent()));
             return warehouseProduct;
         }
 
