@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsWarehouse", "EsWarehouse\EsWarehouse.csproj", "{3A50182C-0458-405B-8FE6-B0F0F720C4A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsWarehouse", "EsWarehouse\EsWarehouse.csproj", "{3A50182C-0458-405B-8FE6-B0F0F720C4A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsWarehouse.Domain", "EsWarehouse.Domain\EsWarehouse.Domain.csproj", "{1D54DC65-6618-4184-B0D0-C4505CA2E1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsWarehouse.Domain", "EsWarehouse.Domain\EsWarehouse.Domain.csproj", "{1D54DC65-6618-4184-B0D0-C4505CA2E1CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsWarehouse.Infrastructure", "EsWarehouse.Infrastructure\EsWarehouse.Infrastructure.csproj", "{AA12F556-3FE1-4B64-ABE2-2B30ADEE64A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsWarehouse.Infrastructure", "EsWarehouse.Infrastructure\EsWarehouse.Infrastructure.csproj", "{AA12F556-3FE1-4B64-ABE2-2B30ADEE64A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsWarehouse.Application", "EsWarehouse.Application\EsWarehouse.Application.csproj", "{D1DCF360-30C0-4593-849F-8D29DB1BEA4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsWarehouse.Application", "EsWarehouse.Application\EsWarehouse.Application.csproj", "{D1DCF360-30C0-4593-849F-8D29DB1BEA4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsWarehouse.Application.Contracts", "EsWarehouse.Application.Contracts\EsWarehouse.Application.Contracts.csproj", "{7A043756-4E9A-4FC7-A583-1CC6B5F33621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsWarehouse.Application.Contracts", "EsWarehouse.Application.Contracts\EsWarehouse.Application.Contracts.csproj", "{7A043756-4E9A-4FC7-A583-1CC6B5F33621}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{995B3710-C02F-47E6-99ED-ED871CB92022}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
