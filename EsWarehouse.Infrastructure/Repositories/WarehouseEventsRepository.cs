@@ -13,12 +13,17 @@ namespace EsWarehouse.Infrastructure.Repositories
     {
         private readonly IList<EventEntity> _events = new List<EventEntity>();
         private readonly IList<Action<IEvent>> _subscribers = new List<Action<IEvent>>();
+        private readonly IDictionary<int, ProductSnapshot> _snapshots = new Dictionary<int, ProductSnapshot>();
+
+        private const int SnapshotInterval = 4;
 
         public WarehouseProduct GetWarehouseProduct(int sku)
         {
-            var warehouseProduct = new WarehouseProduct(sku);
+            var snapshot = GetSnapshot(sku);
+            var warehouseProduct = new WarehouseProduct(sku, snapshot.State);
 
-            var events = _events.Where(x => x.CorrelationId == sku);
+            var nextVersionStart = snapshot.State.CurrentVersion + 1;
+            var events = _events.Where(x => x.CorrelationId == sku && x.Version >= nextVersionStart);
             if (!events.Any())
             {
                 return warehouseProduct;
@@ -33,27 +38,25 @@ namespace EsWarehouse.Infrastructure.Repositories
             return _events.Where(ev => ev.CorrelationId == sku).Select(ev => ev.ToEvent());
         }
 
-        public void Persist(EventEntity evnt)
+        public void Persist(WarehouseProduct warehouseProduct)
         {
-            NotifySubscribers(() => _events.Add(evnt), evnt.ToEvent());
-        }
-
-        public void Persist(IEnumerable<EventEntity> evnts)
-        {
-            foreach (var @event in evnts)
+            if (!warehouseProduct.GetUncommittedEvents().Any())
             {
-                NotifySubscribers(() => _events.Add(@event), @event.ToEvent());
+                return;
             }
-        }
 
-        public void Persist(IEvent evnt)
-        {
-            NotifySubscribers(() => Persist(evnt.ToEntity()), evnt);
-        }
+            foreach (var evnt in warehouseProduct.GetUncommittedEvents())
+            {
+                NotifySubscribers(() => _events.Add(evnt.ToEntity()), evnt);
 
-        public void Persist(IEnumerable<IEvent> evnts)
-        {
-            Persist(evnts.Select(ev => ev.ToEntity()));
+                if (evnt.Version % SnapshotInterval == 0)
+                {
+                    SaveSnapshot(evnt.Sku, new ProductSnapshot
+                    {
+                        State = warehouseProduct.GetState()
+                    });
+                }
+            }
         }
 
         public void Subscribe(params Action<IEvent>[] subscribers)
@@ -68,7 +71,27 @@ namespace EsWarehouse.Infrastructure.Repositories
                 _subscribers.Add(subscriber);
             }
         }
-        
+
+        private void SaveSnapshot(int sku, ProductSnapshot snapshot)
+        {
+            if (!_snapshots.ContainsKey(sku))
+            {
+                _snapshots.Add(sku, snapshot);
+            }
+
+            _snapshots[sku] = snapshot;
+        }
+
+        private ProductSnapshot GetSnapshot(int sku)
+        {
+            if (!_snapshots.ContainsKey(sku))
+            {
+                return new ProductSnapshot();
+            }
+
+            return _snapshots[sku];
+        }
+
         private void NotifySubscribers(Action action, IEvent evnt)
         {
             action.Invoke();
@@ -83,5 +106,10 @@ namespace EsWarehouse.Infrastructure.Repositories
                 subscriber.Invoke(evnt);
             }
         }
+    }
+
+    public class ProductSnapshot
+    {
+        public WarehouseProductState State { get; set; } = new WarehouseProductState();
     }
 }

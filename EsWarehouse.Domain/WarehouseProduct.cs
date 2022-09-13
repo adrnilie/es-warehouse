@@ -7,7 +7,7 @@ using EsWarehouse.Domain.Primitives;
 
 namespace EsWarehouse.Domain
 {
-    public class CurrentState
+    public class WarehouseProductState
     {
         public int Quantity { get; set; }
         public int CurrentVersion { get; set; }
@@ -20,12 +20,17 @@ namespace EsWarehouse.Domain
     {
         public int Sku { get; }
 
-        private readonly IList<IEvent> _events = new List<IEvent>();
-        private readonly CurrentState _currentState = new CurrentState();
+        private readonly IList<IEvent> _pendingEvents = new List<IEvent>();
+        private readonly WarehouseProductState _currentState = new WarehouseProductState();
 
-        public WarehouseProduct(int sku)
+        public WarehouseProduct(int sku, WarehouseProductState state)
         {
             Sku = sku;
+            _currentState = new WarehouseProductState
+            {
+                CurrentVersion = state.CurrentVersion,
+                Quantity = state.Quantity
+            };
         }
 
         public void RestoreFrom(IEnumerable<IEvent> events)
@@ -51,7 +56,7 @@ namespace EsWarehouse.Domain
             Apply(evnt);
 
             evnt.Version = ++_currentState.CurrentVersion;
-            _events.Add(evnt);
+            _pendingEvents.Add(evnt);
         }
 
         public void CreateProduct(CreateProductCommand productCommand)
@@ -101,9 +106,14 @@ namespace EsWarehouse.Domain
             _currentState.Quantity -= evnt.Quantity;
         }
 
-        public IEnumerable<IEvent> Commit()
+        public IEnumerable<IEvent> GetUncommittedEvents()
         {
-            return _events;
+            return _pendingEvents;
+        }
+
+        public WarehouseProductState GetState()
+        {
+            return _currentState;
         }
 
         private ProductCreated Adapt(CreateProductCommand command)

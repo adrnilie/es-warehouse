@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EsWarehouse.Domain.Entities;
 using EsWarehouse.Domain.Primitives;
 
 namespace EsWarehouse.Domain.Abstractions
@@ -8,9 +7,6 @@ namespace EsWarehouse.Domain.Abstractions
     {
         IEnumerable<IEvent> GetAllEvents(int sku);
         WarehouseProduct GetWarehouseProduct(int sku);
-        void Persist(EventEntity evnt);
-        void Persist(IEnumerable<EventEntity> evnts);
-        void Persist(IEvent evnt);
-        void Persist(IEnumerable<IEvent> evnts);
+        void Persist(WarehouseProduct warehouseProduct);
     }
 }

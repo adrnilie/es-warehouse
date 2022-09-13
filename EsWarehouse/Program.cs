@@ -54,7 +54,7 @@ namespace EsWarehouse
                             Quantity = quantity
                         });
 
-                        warehouseEventsRepository.Persist(warehouseProduct.Commit());
+                        warehouseEventsRepository.Persist(warehouseProduct);
                         break;
                     case "A":
                         Console.Write("Quantity: ");
@@ -70,7 +70,7 @@ namespace EsWarehouse
                             Quantity = quantity
                         });
 
-                        warehouseEventsRepository.Persist(warehouseProduct.Commit());
+                        warehouseEventsRepository.Persist(warehouseProduct);
                         break;
                     case "S":
                         Console.Write("Quantity: ");
@@ -86,7 +86,7 @@ namespace EsWarehouse
                             Quantity = quantity
                         });
 
-                        warehouseEventsRepository.Persist(warehouseProduct.Commit());
+                        warehouseEventsRepository.Persist(warehouseProduct);
                         break;
                     case "P":
                         var events = warehouseEventsRepository.GetAllEvents(sku);
